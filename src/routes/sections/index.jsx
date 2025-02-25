@@ -40,7 +40,7 @@ export function Router() {
     ...dashboardRoutes,
 
     // Main
-    ...mainRoutes,
+
 
     // Components
     ...componentsRoutes,

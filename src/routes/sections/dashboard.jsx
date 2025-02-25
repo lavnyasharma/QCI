@@ -61,7 +61,7 @@ const MailPage = lazy(() => import('src/pages/dashboard/mail'));
 const CalendarPage = lazy(() => import('src/pages/dashboard/calendar'));
 const KanbanPage = lazy(() => import('src/pages/dashboard/kanban'));
 // Test render page by role
-const PermissionDeniedPage = lazy(() => import('src/pages/dashboard/permission'));
+
 // Blank page
 const ParamsPage = lazy(() => import('src/pages/dashboard/params'));
 const BlankPage = lazy(() => import('src/pages/dashboard/blank'));
@@ -163,7 +163,7 @@ export const dashboardRoutes = [
       { path: 'chat', element: <ChatPage /> },
       { path: 'calendar', element: <CalendarPage /> },
       { path: 'kanban', element: <KanbanPage /> },
-      { path: 'permission', element: <PermissionDeniedPage /> },
+    
       { path: 'params', element: <ParamsPage /> },
       { path: 'blank', element: <BlankPage /> },
     ],
