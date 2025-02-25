@@ -60,32 +60,6 @@ export const navData = [
   /**
    * Management
    */
-  {
-    subheader: 'Management',
-    items: [
-   
-      {
-        title: 'Product',
-        path: paths.dashboard.product.root,
-        icon: ICONS.product,
-        children: [
-          { title: 'List', path: paths.dashboard.product.root },
-          { title: 'Details', path: paths.dashboard.product.demo.details },
-          { title: 'Create', path: paths.dashboard.product.new },
-          { title: 'Edit', path: paths.dashboard.product.demo.edit },
-        ],
-      },
 
-
-
-
-
-
-
-
-
-      { title: 'Kanban', path: paths.dashboard.kanban, icon: ICONS.kanban },
-    ],
-  },
 
 ];
