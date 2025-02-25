@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/config-global';
 
-import { SplitUpdatePasswordView } from 'src/auth/view/auth-demo/split';
+
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ export default function Page() {
         <title> {metadata.title}</title>
       </Helmet>
 
-      <SplitUpdatePasswordView />
+      
     </>
   );
 }

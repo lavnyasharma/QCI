@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/config-global';
 
-import { CenteredSignUpView } from 'src/auth/view/auth-demo/centered';
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +14,7 @@ export default function Page() {
         <title> {metadata.title}</title>
       </Helmet>
 
-      <CenteredSignUpView />
+
     </>
   );
 }
