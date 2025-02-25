@@ -20,8 +20,7 @@ const ProductListPage = lazy(() => import('src/pages/product/list'));
 const ProductDetailsPage = lazy(() => import('src/pages/product/details'));
 const ProductCheckoutPage = lazy(() => import('src/pages/product/checkout'));
 // Blog
-const PostListPage = lazy(() => import('src/pages/post/list'));
-const PostDetailsPage = lazy(() => import('src/pages/post/details'));
+
 // Error
 const Page500 = lazy(() => import('src/pages/error/500'));
 const Page403 = lazy(() => import('src/pages/error/403'));
@@ -71,14 +70,7 @@ export const mainRoutes = [
               { path: 'checkout', element: <ProductCheckoutPage /> },
             ],
           },
-          {
-            path: 'post',
-            children: [
-              { element: <PostListPage />, index: true },
-              { path: 'list', element: <PostListPage /> },
-              { path: ':title', element: <PostDetailsPage /> },
-            ],
-          },
+         
         ],
       },
       {
