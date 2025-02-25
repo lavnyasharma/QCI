@@ -151,8 +151,8 @@ export const navData = [
           </Label>
         ),
       },
-      { title: 'Chat', path: paths.dashboard.chat, icon: ICONS.chat },
-      { title: 'Calendar', path: paths.dashboard.calendar, icon: ICONS.calendar },
+  
+
       { title: 'Kanban', path: paths.dashboard.kanban, icon: ICONS.kanban },
     ],
   },
@@ -162,7 +162,7 @@ export const navData = [
   {
     subheader: 'Misc',
     items: [
-     
+
       {
         title: 'Level',
         path: '#/dashboard/menu_level',
@@ -227,12 +227,7 @@ export const navData = [
         path: '/dashboard/params?id=e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1',
         icon: ICONS.parameter,
       },
-      {
-        title: 'External link',
-        path: 'https://www.google.com/',
-        icon: ICONS.external,
-        info: <Iconify width={18} icon="prime:external-link" />,
-      },
+
       { title: 'Blank', path: paths.dashboard.blank, icon: ICONS.blank },
     ],
   },

@@ -56,9 +56,9 @@ const TourEditPage = lazy(() => import('src/pages/dashboard/tour/edit'));
 // File manager
 const FileManagerPage = lazy(() => import('src/pages/dashboard/file-manager'));
 // App
-const ChatPage = lazy(() => import('src/pages/dashboard/chat'));
+
 const MailPage = lazy(() => import('src/pages/dashboard/mail'));
-const CalendarPage = lazy(() => import('src/pages/dashboard/calendar'));
+
 const KanbanPage = lazy(() => import('src/pages/dashboard/kanban'));
 // Test render page by role
 
@@ -160,10 +160,10 @@ export const dashboardRoutes = [
       },
       { path: 'file-manager', element: <FileManagerPage /> },
       { path: 'mail', element: <MailPage /> },
-      { path: 'chat', element: <ChatPage /> },
-      { path: 'calendar', element: <CalendarPage /> },
+
+
       { path: 'kanban', element: <KanbanPage /> },
-    
+
       { path: 'params', element: <ParamsPage /> },
       { path: 'blank', element: <BlankPage /> },
     ],
