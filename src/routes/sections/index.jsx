@@ -4,6 +4,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import { MainLayout } from 'src/layouts/main';
 
 import { SplashScreen } from 'src/components/loading-screen';
+import { CONFIG } from 'src/config-global';
 
 import { authRoutes } from './auth';
 import { mainRoutes } from './main';
@@ -26,7 +27,7 @@ export function Router() {
       element: (
         <Suspense fallback={<SplashScreen />}>
           <MainLayout>
-            <HomePage />
+            <Navigate to={CONFIG.auth.redirectPath} replace />
           </MainLayout>
         </Suspense>
       ),
@@ -34,7 +35,6 @@ export function Router() {
 
     // Auth
     ...authRoutes,
-    ...authDemoRoutes,
 
     // Dashboard
     ...dashboardRoutes,
