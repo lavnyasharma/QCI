@@ -16,7 +16,7 @@ const OverviewEcommercePage = lazy(() => import('src/pages/dashboard/ecommerce')
 const OverviewAnalyticsPage = lazy(() => import('src/pages/dashboard/analytics'));
 const OverviewBankingPage = lazy(() => import('src/pages/dashboard/banking'));
 const OverviewBookingPage = lazy(() => import('src/pages/dashboard/booking'));
-const OverviewFilePage = lazy(() => import('src/pages/dashboard/file'));
+
 const OverviewCoursePage = lazy(() => import('src/pages/dashboard/course'));
 // Product
 const ProductDetailsPage = lazy(() => import('src/pages/dashboard/product/details'));
@@ -48,16 +48,12 @@ const JobDetailsPage = lazy(() => import('src/pages/dashboard/job/details'));
 const JobListPage = lazy(() => import('src/pages/dashboard/job/list'));
 const JobCreatePage = lazy(() => import('src/pages/dashboard/job/new'));
 const JobEditPage = lazy(() => import('src/pages/dashboard/job/edit'));
-// Tour
-const TourDetailsPage = lazy(() => import('src/pages/dashboard/tour/details'));
-const TourListPage = lazy(() => import('src/pages/dashboard/tour/list'));
-const TourCreatePage = lazy(() => import('src/pages/dashboard/tour/new'));
-const TourEditPage = lazy(() => import('src/pages/dashboard/tour/edit'));
+
 // File manager
 
 // App
 
-const MailPage = lazy(() => import('src/pages/dashboard/mail'));
+
 
 const KanbanPage = lazy(() => import('src/pages/dashboard/kanban'));
 // Test render page by role
@@ -86,7 +82,7 @@ export const dashboardRoutes = [
       { path: 'analytics', element: <OverviewAnalyticsPage /> },
       { path: 'banking', element: <OverviewBankingPage /> },
       { path: 'booking', element: <OverviewBookingPage /> },
-      { path: 'file', element: <OverviewFilePage /> },
+
       { path: 'course', element: <OverviewCoursePage /> },
       {
         path: 'user',
@@ -148,18 +144,9 @@ export const dashboardRoutes = [
           { path: ':id/edit', element: <JobEditPage /> },
         ],
       },
-      {
-        path: 'tour',
-        children: [
-          { element: <TourListPage />, index: true },
-          { path: 'list', element: <TourListPage /> },
-          { path: ':id', element: <TourDetailsPage /> },
-          { path: 'new', element: <TourCreatePage /> },
-          { path: ':id/edit', element: <TourEditPage /> },
-        ],
-      },
-     
-      { path: 'mail', element: <MailPage /> },
+
+
+
 
 
       { path: 'kanban', element: <KanbanPage /> },

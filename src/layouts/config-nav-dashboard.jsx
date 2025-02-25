@@ -53,7 +53,7 @@ export const navData = [
       { title: 'Analytics', path: paths.dashboard.general.analytics, icon: ICONS.analytics },
       { title: 'Banking', path: paths.dashboard.general.banking, icon: ICONS.banking },
       { title: 'Booking', path: paths.dashboard.general.booking, icon: ICONS.booking },
-      { title: 'File', path: paths.dashboard.general.file, icon: ICONS.file },
+
       { title: 'Course', path: paths.dashboard.general.course, icon: ICONS.course },
     ],
   },
@@ -129,106 +129,13 @@ export const navData = [
           { title: 'Edit', path: paths.dashboard.job.demo.edit },
         ],
       },
-      {
-        title: 'Tour',
-        path: paths.dashboard.tour.root,
-        icon: ICONS.tour,
-        children: [
-          { title: 'List', path: paths.dashboard.tour.root },
-          { title: 'Details', path: paths.dashboard.tour.demo.details },
-          { title: 'Create', path: paths.dashboard.tour.new },
-          { title: 'Edit', path: paths.dashboard.tour.demo.edit },
-        ],
-      },
- 
-      {
-        title: 'Mail',
-        path: paths.dashboard.mail,
-        icon: ICONS.mail,
-        info: (
-          <Label color="error" variant="inverted">
-            +32
-          </Label>
-        ),
-      },
+    
+
+
 
 
       { title: 'Kanban', path: paths.dashboard.kanban, icon: ICONS.kanban },
     ],
   },
-  /**
-   * Item State
-   */
-  {
-    subheader: 'Misc',
-    items: [
 
-      {
-        title: 'Level',
-        path: '#/dashboard/menu_level',
-        icon: ICONS.menuItem,
-        children: [
-          {
-            title: 'Level 1a',
-            path: '#/dashboard/menu_level/menu_level_1a',
-            children: [
-              {
-                title: 'Level 2a',
-                path: '#/dashboard/menu_level/menu_level_1a/menu_level_2a',
-              },
-              {
-                title: 'Level 2b',
-                path: '#/dashboard/menu_level/menu_level_1a/menu_level_2b',
-                children: [
-                  {
-                    title: 'Level 3a',
-                    path: '#/dashboard/menu_level/menu_level_1a/menu_level_2b/menu_level_3a',
-                  },
-                  {
-                    title: 'Level 3b',
-                    path: '#/dashboard/menu_level/menu_level_1a/menu_level_2b/menu_level_3b',
-                  },
-                ],
-              },
-            ],
-          },
-          { title: 'Level 1b', path: '#/dashboard/menu_level/menu_level_1b' },
-        ],
-      },
-      {
-        title: 'Disabled',
-        path: '#disabled',
-        icon: ICONS.disabled,
-        disabled: true,
-      },
-      {
-        title: 'Label',
-        path: '#label',
-        icon: ICONS.label,
-        info: (
-          <Label
-            color="info"
-            variant="inverted"
-            startIcon={<Iconify icon="solar:bell-bing-bold-duotone" />}
-          >
-            NEW
-          </Label>
-        ),
-      },
-      {
-        title: 'Caption',
-        path: '#caption',
-        icon: ICONS.menuItem,
-        caption:
-          'Quisque malesuada placerat nisl. In hac habitasse platea dictumst. Cras id dui. Pellentesque commodo eros a enim. Morbi mollis tellus ac sapien.',
-      },
-      {
-        title: 'Params',
-        path: '/dashboard/params?id=e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1',
-        icon: ICONS.parameter,
-      },
-
-      { title: 'Blank', path: paths.dashboard.blank, icon: ICONS.blank },
-    ],
-  },
 ];
