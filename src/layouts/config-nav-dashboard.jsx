@@ -140,7 +140,7 @@ export const navData = [
           { title: 'Edit', path: paths.dashboard.tour.demo.edit },
         ],
       },
-      { title: 'File manager', path: paths.dashboard.fileManager, icon: ICONS.folder },
+ 
       {
         title: 'Mail',
         path: paths.dashboard.mail,
@@ -151,7 +151,7 @@ export const navData = [
           </Label>
         ),
       },
-  
+
 
       { title: 'Kanban', path: paths.dashboard.kanban, icon: ICONS.kanban },
     ],
