@@ -7,7 +7,7 @@ import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 import { NavSectionMini, NavSectionVertical } from 'src/components/nav-section';
 
-
+import { NavUpgrade } from '../components/nav-upgrade';
 import { NavToggleButton } from '../components/nav-toggle-button';
 
 // ----------------------------------------------------------------------
@@ -19,14 +19,15 @@ export function NavVertical({ sx, data, slots, isNavMini, layoutQuery, onToggleN
     <>
       {slots?.topArea ?? (
         <Box sx={{ pl: 3.5, pt: 2.5, pb: 1 }}>
-          <Logo />
+        <Logo width="100%" height="30px" />
+
         </Box>
       )}
 
       <Scrollbar fillContent>
         <NavSectionVertical data={data} sx={{ px: 2, flex: '1 1 auto' }} {...other} />
 
-        {slots?.bottomArea}
+        {slots?.bottomArea ?? <NavUpgrade />}
       </Scrollbar>
     </>
   );
