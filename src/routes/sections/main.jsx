@@ -11,7 +11,7 @@ import { SplashScreen } from 'src/components/loading-screen';
 
 
 const ContactPage = lazy(() => import('src/pages/contact-us'));
-const PricingPage = lazy(() => import('src/pages/pricing'));
+
 const PaymentPage = lazy(() => import('src/pages/payment'));
 const ComingSoonPage = lazy(() => import('src/pages/coming-soon'));
 const MaintenancePage = lazy(() => import('src/pages/maintenance'));
@@ -42,7 +42,7 @@ export const mainRoutes = [
           </MainLayout>
         ),
         children: [
-          
+
           {
             path: 'contact-us',
             element: <ContactPage />,
@@ -56,14 +56,7 @@ export const mainRoutes = [
 
         ],
       },
-      {
-        path: 'pricing',
-        element: (
-          <SimpleLayout>
-            <PricingPage />
-          </SimpleLayout>
-        ),
-      },
+    
       {
         path: 'payment',
         element: (
