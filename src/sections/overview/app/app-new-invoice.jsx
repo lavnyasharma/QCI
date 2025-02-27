@@ -1,81 +1,123 @@
 import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import TableRow from '@mui/material/TableRow';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import CardHeader from '@mui/material/CardHeader';
-import IconButton from '@mui/material/IconButton';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-
+import {
+  Box,
+  Card,
+  Table,
+  Button,
+  Divider,
+  TableRow,
+  TableBody,
+  TableCell,
+  CardHeader,
+  IconButton,
+  TextField,
+  Popover,
+  TableHead,
+  TableSortLabel,
+} from '@mui/material';
 import { fCurrency } from 'src/utils/format-number';
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
-import { TableHeadCustom } from 'src/components/table';
-import { usePopover, CustomPopover } from 'src/components/custom-popover';
 
 // ----------------------------------------------------------------------
 
-export function AppNewInvoice({ title, subheader, tableData, headLabel, ...other }) {
-  const [statusFilter, setStatusFilter] = useState('');
-  const [sortBy, setSortBy] = useState('');
+export function AppNewInvoice({ title, subheader, tableData }) {
+  const [filters, setFilters] = useState({
+    invoiceNumber: '',
+    category: '',
+    status: '',
+    priceMin: '',
+    priceMax: '',
+  });
 
-  // Filtered and sorted data
+  const [sort, setSort] = useState({ field: '', direction: 'asc' });
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [activeColumn, setActiveColumn] = useState(null);
+
+  // Handle sorting
+  const handleSort = (field) => {
+    setSort((prev) => ({
+      field,
+      direction: prev.field === field && prev.direction === 'asc' ? 'desc' : 'asc',
+    }));
+  };
+
+  // Handle filter popover
+  const handleOpenFilter = (event, column) => {
+    setAnchorEl(event.currentTarget);
+    setActiveColumn(column);
+  };
+
+  const handleCloseFilter = () => {
+    setAnchorEl(null);
+    setActiveColumn(null);
+  };
+
+  // Filtered & sorted data
   const filteredData = tableData
-    .filter((row) => (statusFilter ? row.status === statusFilter : true))
+    .filter((row) =>
+      filters.invoiceNumber ? row.invoiceNumber.toLowerCase().includes(filters.invoiceNumber.toLowerCase()) : true
+    )
+    .filter((row) => (filters.category ? row.category.toLowerCase().includes(filters.category.toLowerCase()) : true))
+    .filter((row) => (filters.status ? row.status === filters.status : true))
+    .filter((row) => (filters.priceMin ? row.price >= parseFloat(filters.priceMin) : true))
+    .filter((row) => (filters.priceMax ? row.price <= parseFloat(filters.priceMax) : true))
     .sort((a, b) => {
-      if (sortBy === 'price-asc') return a.price - b.price;
-      if (sortBy === 'price-desc') return b.price - a.price;
-      if (sortBy === 'invoice-asc') return a.invoiceNumber.localeCompare(b.invoiceNumber);
-      if (sortBy === 'invoice-desc') return b.invoiceNumber.localeCompare(a.invoiceNumber);
-      return 0;
+      if (!sort.field) return 0;
+      const order = sort.direction === 'asc' ? 1 : -1;
+      if (sort.field === 'price') return (a.price - b.price) * order;
+      return a[sort.field].localeCompare(b[sort.field]) * order;
     });
 
   return (
-    <Card {...other}>
+    <Card>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
 
-      <Box sx={{ display: 'flex', gap: 2, px: 2, mb: 2 }}>
-        <FormControl size="small" sx={{ minWidth: 150 }}>
-          <InputLabel>Status</InputLabel>
-          <Select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            displayEmpty
-          >
-            <MenuItem value="">All</MenuItem>
-            <MenuItem value="progress">In Progress</MenuItem>
-            <MenuItem value="out of date">Out of Date</MenuItem>
-            <MenuItem value="success">Success</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl size="small" sx={{ minWidth: 150 }}>
-          <InputLabel>Sort By</InputLabel>
-          <Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} displayEmpty>
-            <MenuItem value="">None</MenuItem>
-            <MenuItem value="price-asc">Price (Low to High)</MenuItem>
-            <MenuItem value="price-desc">Price (High to Low)</MenuItem>
-            <MenuItem value="invoice-asc">Invoice (A-Z)</MenuItem>
-            <MenuItem value="invoice-desc">Invoice (Z-A)</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-
+      {/* Table */}
       <Scrollbar sx={{ minHeight: 402 }}>
         <Table sx={{ minWidth: 680 }}>
-          <TableHeadCustom headLabel={headLabel} />
+          {/* Table Header with Filters */}
+          <TableHead>
+            <TableRow>
+              {['invoiceNumber', 'category', 'price', 'status'].map((column) => (
+                <TableCell key={column}>
+                  <TableSortLabel
+                    active={sort.field === column}
+                    direction={sort.direction}
+                    onClick={() => handleSort(column)}
+                  >
+                    {column.charAt(0).toUpperCase() + column.slice(1)}
+                  </TableSortLabel>
+
+                  {/* Filter Icon */}
+                  <IconButton size="small" onClick={(event) => handleOpenFilter(event, column)}>
+                    <Iconify icon="mdi:filter" width={18} />
+                  </IconButton>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+
           <TableBody>
             {filteredData.map((row) => (
-              <RowItem key={row.id} row={row} />
+              <TableRow key={row.id}>
+                <TableCell>{row.invoiceNumber}</TableCell>
+                <TableCell>{row.category}</TableCell>
+                <TableCell>{fCurrency(row.price)}</TableCell>
+                <TableCell>
+                  <Label
+                    variant="soft"
+                    color={
+                      (row.status === 'progress' && 'warning') ||
+                      (row.status === 'out of date' && 'error') ||
+                      'success'
+                    }
+                  >
+                    {row.status}
+                  </Label>
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -84,92 +126,72 @@ export function AppNewInvoice({ title, subheader, tableData, headLabel, ...other
       <Divider sx={{ borderStyle: 'dashed' }} />
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
-        <Button
-          size="small"
-          color="inherit"
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
-        >
+        <Button size="small" color="inherit">
           View all
         </Button>
       </Box>
-    </Card>
-  );
-}
 
-function RowItem({ row }) {
-  const popover = usePopover();
-
-  const handleDownload = () => {
-    popover.onClose();
-    console.info('DOWNLOAD', row.id);
-  };
-
-  const handlePrint = () => {
-    popover.onClose();
-    console.info('PRINT', row.id);
-  };
-
-  const handleShare = () => {
-    popover.onClose();
-    console.info('SHARE', row.id);
-  };
-
-  const handleDelete = () => {
-    popover.onClose();
-    console.info('DELETE', row.id);
-  };
-
-  return (
-    <>
-      <TableRow>
-        <TableCell>{row.invoiceNumber}</TableCell>
-        <TableCell>{row.category}</TableCell>
-        <TableCell>{fCurrency(row.price)}</TableCell>
-        <TableCell>
-          <Label
-            variant="soft"
-            color={
-              (row.status === 'progress' && 'warning') ||
-              (row.status === 'out of date' && 'error') ||
-              'success'
-            }
-          >
-            {row.status}
-          </Label>
-        </TableCell>
-        <TableCell align="right" sx={{ pr: 1 }}>
-          <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell>
-      </TableRow>
-
-      <CustomPopover
-        open={popover.open}
-        anchorEl={popover.anchorEl}
-        onClose={popover.onClose}
-        slotProps={{ arrow: { placement: 'right-top' } }}
+      {/* Filter Popover */}
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={handleCloseFilter}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <MenuList>
-          <MenuItem onClick={handleDownload}>
-            <Iconify icon="eva:cloud-download-fill" />
-            Download
-          </MenuItem>
-          <MenuItem onClick={handlePrint}>
-            <Iconify icon="solar:printer-minimalistic-bold" />
-            Print
-          </MenuItem>
-          <MenuItem onClick={handleShare}>
-            <Iconify icon="solar:share-bold" />
-            Share
-          </MenuItem>
-          <Divider sx={{ borderStyle: 'dashed' }} />
-          <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
-            <Iconify icon="solar:trash-bin-trash-bold" />
-            Delete
-          </MenuItem>
-        </MenuList>
-      </CustomPopover>
-    </>
+        <Box sx={{ p: 2, minWidth: 200 }}>
+          {activeColumn === 'invoiceNumber' && (
+            <TextField
+              label="Invoice Number"
+              size="small"
+              fullWidth
+              value={filters.invoiceNumber}
+              onChange={(e) => setFilters((prev) => ({ ...prev, invoiceNumber: e.target.value }))}
+            />
+          )}
+
+          {activeColumn === 'category' && (
+            <TextField
+              label="Category"
+              size="small"
+              fullWidth
+              value={filters.category}
+              onChange={(e) => setFilters((prev) => ({ ...prev, category: e.target.value }))}
+            />
+          )}
+
+          {activeColumn === 'price' && (
+            <>
+              <TextField
+                label="Min Price"
+                type="number"
+                size="small"
+                fullWidth
+                value={filters.priceMin}
+                onChange={(e) => setFilters((prev) => ({ ...prev, priceMin: e.target.value }))}
+                sx={{ mb: 1 }}
+              />
+              <TextField
+                label="Max Price"
+                type="number"
+                size="small"
+                fullWidth
+                value={filters.priceMax}
+                onChange={(e) => setFilters((prev) => ({ ...prev, priceMax: e.target.value }))}
+              />
+            </>
+          )}
+
+          {activeColumn === 'status' && (
+            <TextField
+              label="Status"
+              size="small"
+              fullWidth
+              value={filters.status}
+              onChange={(e) => setFilters((prev) => ({ ...prev, status: e.target.value }))}
+            />
+          )}
+        </Box>
+      </Popover>
+    </Card>
   );
 }
