@@ -8,6 +8,7 @@ import {
   _analyticPosts,
   _analyticTraffic,
   _analyticOrderTimeline,
+  _appInvoices,
 } from 'src/_mock';
 
 import { AnalyticsNews } from '../analytics-news';
@@ -19,6 +20,7 @@ import { AnalyticsWidgetSummary } from '../analytics-widget-summary';
 import { AnalyticsTrafficBySite } from '../analytics-traffic-by-site';
 import { AnalyticsCurrentSubject } from '../analytics-current-subject';
 import { AnalyticsConversionRates } from '../analytics-conversion-rates';
+import { AppNewInvoice } from '../../app/app-new-invoice';
 
 // ----------------------------------------------------------------------
 
@@ -149,8 +151,19 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={8}>
-          <AnalyticsNews title="News" list={_analyticPosts} />
+
+        <Grid xs={12} lg={8}>
+          <AppNewInvoice
+            title="New invoice"
+            tableData={_appInvoices}
+            headLabel={[
+              { id: 'id', label: 'Invoice ID' },
+              { id: 'category', label: 'Category' },
+              { id: 'price', label: 'Price' },
+              { id: 'status', label: 'Status' },
+              { id: '' },
+            ]}
+          />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
