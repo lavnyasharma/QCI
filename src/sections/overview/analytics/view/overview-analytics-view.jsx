@@ -1,5 +1,6 @@
 import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
+import { Box, Divider, Typography } from "@mui/material";
+import { useState } from 'react';
 
 import { CONFIG } from 'src/config-global';
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -10,6 +11,9 @@ import {
   _analyticOrderTimeline,
   _appInvoices,
 } from 'src/_mock';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import { AnalyticsNews } from '../analytics-news';
 import { AnalyticsTasks } from '../analytics-tasks';
@@ -21,15 +25,37 @@ import { AnalyticsTrafficBySite } from '../analytics-traffic-by-site';
 import { AnalyticsCurrentSubject } from '../analytics-current-subject';
 import { AnalyticsConversionRates } from '../analytics-conversion-rates';
 import { AppNewInvoice } from '../../app/app-new-invoice';
+import { EcommerceYearlySales } from '../../e-commerce/ecommerce-yearly-sales';
+import { EcommerceSaleByGender } from '../../e-commerce/ecommerce-sale-by-gender';
+import { BookingCheckInWidgets } from '../../booking/booking-check-in-widgets';
+import { CourseProgress } from '../../course/course-progress';
+
+
 
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
+ <Typography variant="h4" sx={{ mb: { xs: 2, md: 3 }, textAlign: "center" }}>
         Hi, Welcome back 👋
       </Typography>
+
+      <Grid xs={12} display="flex" justifyContent="center" alignItems="center" sx={{ my: 2 }}>
+        <Box sx={{ display: "flex", alignItems: "center", width: "100%", maxWidth: 600 }}>
+          <Divider sx={{ flex: 1, bgcolor: "grey.500" }} />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Select Date"
+              value={selectedDate}
+              onChange={(newValue) => setSelectedDate(newValue)}
+              sx={{ mx: 2, width: 250 }}
+            />
+          </LocalizationProvider>
+          <Divider sx={{ flex: 1, bgcolor: "grey.500" }} />
+        </Box>
+      </Grid>
 
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
@@ -94,20 +120,65 @@ export function OverviewAnalyticsView() {
             }}
           />
         </Grid>
-
-        <Grid xs={12} md={6} lg={4}>
-          <AnalyticsCurrentVisits
-            title="Current visits"
+        <Grid xs={12} sm={6} md={3}>
+          <AnalyticsWidgetSummary
+            title="Messages"
+            percent={3.6}
+            total={234}
+            color="error"
+            icon={
+              <img alt="icon" src={`${CONFIG.assetsDir}/assets/icons/glass/ic-glass-message.svg`} />
+            }
             chart={{
-              series: [
-                { label: 'America', value: 3500 },
-                { label: 'Asia', value: 2500 },
-                { label: 'Europe', value: 1500 },
-                { label: 'Africa', value: 500 },
-              ],
+              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+              series: [56, 30, 23, 54, 47, 40, 62, 73],
             }}
           />
         </Grid>
+        <Grid xs={12} sm={6} md={3}>
+          <AnalyticsWidgetSummary
+            title="Messages"
+            percent={3.6}
+            total={234}
+            color="error"
+            icon={
+              <img alt="icon" src={`${CONFIG.assetsDir}/assets/icons/glass/ic-glass-message.svg`} />
+            }
+            chart={{
+              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+              series: [56, 30, 23, 54, 47, 40, 62, 73],
+            }}
+          />
+        </Grid>
+        <Grid xs={12} sm={6} md={3}>
+          <AnalyticsWidgetSummary
+            title="Messages"
+            percent={3.6}
+            total={234}
+            color="error"
+            icon={
+              <img alt="icon" src={`${CONFIG.assetsDir}/assets/icons/glass/ic-glass-message.svg`} />
+            }
+            chart={{
+              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+              series: [56, 30, 23, 54, 47, 40, 62, 73],
+            }}
+          />
+        </Grid>
+
+        <Grid xs={12} md={6} lg={4}>
+            <EcommerceSaleByGender
+              title="Sale by gender"
+              total={2324}
+              chart={{
+                series: [
+                  { label: 'Mens', value: 25 },
+                  { label: 'Womens', value: 50 },
+                  { label: 'Kids', value: 75 },
+                ],
+              }}
+            />
+          </Grid>
 
         <Grid xs={12} md={6} lg={8}>
           <AnalyticsWebsiteVisits
@@ -124,59 +195,139 @@ export function OverviewAnalyticsView() {
         </Grid>
 
         <Grid xs={12} md={6} lg={8}>
-          <AnalyticsConversionRates
-            title="Conversion rates"
+          <EcommerceYearlySales
+            title="Yearly sales"
             subheader="(+43%) than last year"
             chart={{
-              categories: ['Italy', 'Japan', 'China', 'Canada', 'France'],
+              categories: [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec',
+              ],
               series: [
-                { name: '2022', data: [44, 55, 41, 64, 22] },
-                { name: '2023', data: [53, 32, 33, 52, 13] },
+                {
+                  name: '2022',
+                  data: [
+                    {
+                      name: 'Total income',
+                      data: [10, 41, 35, 51, 49, 62, 69, 91, 148, 35, 51, 49],
+                    },
+                    {
+                      name: 'Total expenses',
+                      data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 13, 56, 77],
+                    },
+                  ],
+                },
+                {
+                  name: '2023',
+                  data: [
+                    {
+                      name: 'Total income',
+                      data: [51, 35, 41, 10, 91, 69, 62, 148, 91, 69, 62, 49],
+                    },
+                    {
+                      name: 'Total expenses',
+                      data: [56, 13, 34, 10, 77, 99, 88, 45, 77, 99, 88, 77],
+                    },
+                  ],
+                },
               ],
             }}
           />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
-          <AnalyticsCurrentSubject
-            title="Current subject"
+     {/* <BookingCheckInWidgets
+                 chart={{
+                   series: [
+                     { label: 'Like', percent: 10,  },
+                     { label: 'Dislike', percent: 90 },
+                   ],
+                 }}
+                 sx={{ boxShadow: { md: 'none' } }}
+               /> */}
+              
+          <AnalyticsCurrentVisits
+            title="Devices"
             chart={{
-              categories: ['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math'],
               series: [
-                { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
-                { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
-                { name: 'Series 3', data: [44, 76, 78, 13, 43, 10] },
+                { label: 'Desktop', value: 3500 },
+                { label: 'Tablet', value: 2500 },
+                { label: 'Mobile', value: 1500 },
+                { label: 'Whatsapp', value: 500 },
               ],
             }}
           />
         </Grid>
-
-
-        <Grid xs={12} lg={8}>
-          <AppNewInvoice
-            title="New invoice"
-            tableData={_appInvoices}
-            headLabel={[
-              { id: 'id', label: 'Invoice ID' },
-              { id: 'category', label: 'Category' },
-              { id: 'price', label: 'Price' },
-              { id: 'status', label: 'Status' },
-              { id: '' },
-            ]}
-          />
-        </Grid>
-
+     
+        
         <Grid xs={12} md={6} lg={4}>
-          <AnalyticsOrderTimeline title="Order timeline" list={_analyticOrderTimeline} />
+           <CourseProgress
+                       title="Course progress"
+                       chart={{
+                         series: [
+                           { label: 'To start', value: 45 },
+                           
+                         ],
+                       }}
+                     />
         </Grid>
-
         <Grid xs={12} md={6} lg={4}>
-          <AnalyticsTrafficBySite title="Traffic by site" list={_analyticTraffic} />
+           <CourseProgress
+                       title="Course progress"
+                       chart={{
+                         series: [
+                           { label: 'To start', value: 45 },
+                           { label: 'In progress', value: 25 },
+                           
+                         ],
+                       }}
+                     />
         </Grid>
+        <Grid xs={12} md={6} lg={4}>
+           <CourseProgress
+                       title="Course progress"
+                       chart={{
+                         series: [
+                           { label: 'To start', value: 45 },
+                           { label: 'In progress', value: 25 },
+                           { label: 'Completed', value: 20 },
+                         ],
+                       }}
+                     />
+        </Grid>
+   
 
-        <Grid xs={12} md={6} lg={8}>
-          <AnalyticsTasks title="Tasks" list={_analyticTasks} />
-        </Grid>
+
+        <Grid xs={12}>
+  <AppNewInvoice
+    title="New invoice"
+    tableData={_appInvoices}
+    headLabel={[
+      { id: 'id', label: 'Invoice ID' },
+      { id: 'category', label: 'Category' },
+      { id: 'price', label: 'Price' },
+      { id: 'status', label: 'Status' },
+      { id: '' },
+    ]}
+  />
+</Grid>
+
+
+   
+
+      
+
+   
       </Grid>
     </DashboardContent>
   );

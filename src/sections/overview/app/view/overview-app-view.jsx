@@ -196,6 +196,16 @@ export function OverviewAppView() {
               }}
               sx={{ bgcolor: 'info.dark', [`& .${svgColorClasses.root}`]: { color: 'info.light' } }}
             />
+              <AppWidget
+              title="Applications"
+              total={55566}
+              icon="fluent:mail-24-filled"
+              chart={{
+                series: 75,
+                colors: [theme.vars.palette.info.light, theme.vars.palette.info.main],
+              }}
+              sx={{ bgcolor: 'info.dark', [`& .${svgColorClasses.root}`]: { color: 'info.light' } }}
+            />
           </Box>
         </Grid>
       </Grid>

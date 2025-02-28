@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 
 import { useResponsive } from 'src/hooks/use-responsive';
@@ -50,58 +51,71 @@ export function BookingCheckInWidgets({ chart, ...other }) {
   });
 
   return (
-    <Card {...other}>
-      <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        divider={
-          <Divider
-            flexItem
-            orientation={smUp ? 'vertical' : 'horizontal'}
-            sx={{ borderStyle: 'dashed' }}
-          />
-        }
-      >
-        {chart.series.map((item) => (
-          <Box
-            key={item.label}
-            sx={{
-              py: 5,
-              gap: 3,
-              width: 1,
-              display: 'flex',
-              px: { xs: 3, sm: 0 },
-              alignItems: 'center',
-              justifyContent: { sm: 'center' },
-            }}
-          >
-            <Chart
-              type="radialBar"
-              series={[item.percent]}
-              options={{
-                ...chartOptions,
-                ...(item.label !== 'Sold' && {
-                  fill: {
-                    type: 'gradient',
-                    gradient: {
-                      colorStops: [
-                        { offset: 0, color: chartColors[1][0], opacity: 1 },
-                        { offset: 100, color: chartColors[1][1], opacity: 1 },
-                      ],
-                    },
-                  },
-                }),
-              }}
-              width={80}
-              height={80}
-            />
+    <Box
+      sx={{
+        p: 2,
+        borderRadius: 2,
+        bgcolor: 'background.paper',
+        boxShadow: '0 0 2px 0 rgba(145, 158, 171, 0.2), 0 12px 24px -4px rgba(145, 158, 171, 0.12)',
+      }}
+    >
+      <Typography variant="h6" sx={{ mb: 2 }}>
+        Feedback
+      </Typography>
 
-            <div>
-              <Box sx={{ mb: 0.5, typography: 'h5' }}>{fNumber(item.total)}</Box>
-              <Box sx={{ typography: 'body2', color: 'text.secondary' }}>{item.label}</Box>
-            </div>
-          </Box>
-        ))}
-      </Stack>
-    </Card>
+      <Card {...other}>
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          divider={
+            <Divider
+              flexItem
+              orientation={smUp ? 'vertical' : 'horizontal'}
+              sx={{ borderStyle: 'dashed' }}
+            />
+          }
+        >
+          {chart.series.map((item) => (
+            <Box
+              key={item.label}
+              sx={{
+               
+                gap: 1.5,
+                width: 1,
+                display: 'flex',
+                px: { xs: 3, sm: 0 },
+                alignItems: 'center',
+                justifyContent: { sm: 'center' },
+              }}
+            >
+              <Chart
+                type="radialBar"
+                series={[item.percent]}
+                options={{
+                  ...chartOptions,
+                  ...(item.label !== 'Sold' && {
+                    fill: {
+                      type: 'gradient',
+                      gradient: {
+                        colorStops: [
+                          { offset: 0, color: chartColors[1][0], opacity: 1 },
+                          { offset: 100, color: chartColors[1][1], opacity: 1 },
+                        ],
+                      },
+                    },
+                  }),
+                }}
+                width={80}
+                height={80}
+              />
+
+              <div>
+                <Box sx={{ mb: 0.5, typography: 'h5' }}>{fNumber(item.total)}</Box>
+                <Box sx={{ typography: 'body2', color: 'text.secondary' }}>{item.label}</Box>
+              </div>
+            </Box>
+          ))}
+        </Stack>
+      </Card>
+    </Box>
   );
 }
