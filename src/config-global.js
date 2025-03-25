@@ -9,6 +9,7 @@ export const CONFIG = {
   appVersion: packageJson.version,
   serverUrl: import.meta.env.VITE_SERVER_URL ?? '',
   assetsDir: import.meta.env.VITE_ASSETS_DIR ?? '',
+  qciServerUrl: import.meta.env.VITE_QCI_SERVER_URL ?? '',
   /**
    * Auth
    * @method jwt | amplify | firebase | supabase | auth0

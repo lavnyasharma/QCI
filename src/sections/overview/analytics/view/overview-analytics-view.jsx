@@ -9,8 +9,10 @@ import {
   _analyticPosts,
   _analyticTraffic,
   _analyticOrderTimeline,
+  
   _appInvoices,
 } from 'src/_mock';
+import dayjs from "dayjs";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -46,13 +48,13 @@ export function OverviewAnalyticsView() {
         <Box sx={{ display: "flex", alignItems: "center", width: "100%", maxWidth: 600 }}>
           <Divider sx={{ flex: 1, bgcolor: "grey.500" }} />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Select Date"
-              value={selectedDate}
-              onChange={(newValue) => setSelectedDate(newValue)}
-              sx={{ mx: 2, width: 250 }}
-            />
-          </LocalizationProvider>
+  <DatePicker
+    label="Select Date"
+    value={selectedDate || dayjs()} // Set default value as current date
+    onChange={(newValue) => setSelectedDate(newValue)}
+    sx={{ mx: 2, width: 250 }}
+  />
+</LocalizationProvider>
           <Divider sx={{ flex: 1, bgcolor: "grey.500" }} />
         </Box>
       </Grid>
@@ -317,6 +319,7 @@ export function OverviewAnalyticsView() {
       { id: 'category', label: 'Category' },
       { id: 'price', label: 'Price' },
       { id: 'status', label: 'Status' },
+      
       { id: '' },
     ]}
   />
